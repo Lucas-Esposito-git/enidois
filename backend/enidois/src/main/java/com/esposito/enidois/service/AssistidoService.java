@@ -68,4 +68,9 @@ public class AssistidoService {
         return repository.findAll();
 
     }
+
+    public AssistidoEntity buscarPorId(Long id) {
+
+        return repository.findById(id).orElseThrow(() -> new RuntimeException("Assistido não encontrado"));
+    }
 }

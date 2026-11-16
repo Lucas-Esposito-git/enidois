@@ -32,6 +32,11 @@ public class AssistidoController {
         return service.listar();
     }
 
+    @GetMapping("/{id}")
+    public AssistidoEntity buscarPorId(@PathVariable Long id) {
+        return service.buscarPorId(id);
+    }
+
     @PutMapping
     public AssistidoEntity atualizar(@PathVariable Long id ,@RequestBody AssistidoDTO dto) {
         return service.atualizar(id, dto);
