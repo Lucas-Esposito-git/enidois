@@ -24,19 +24,19 @@ public class AssistidoEntity {
     @Column(name = "nomeSocial", length = 200)
     private String nomeSocial;
 
-    @Column(name = "cpf", nullable = false, unique = true, length = 11)
+    @Column(name = "cpf", nullable = false, unique = true)
     private String cpf;
 
     @Column(name = "email", length = 100)
     private String email;
 
-    @Column(name = "telefone", length = 11)
+    @Column(name = "telefone")
     private String telefone;
 
     @Column(name = "endereco", length = 200)
     private String endereco;
 
-    @Column(name = "cep", length = 10)
+    @Column(name = "cep")
     private String cep;
 
     @Column(name = "genero", length = 100)
@@ -51,6 +51,6 @@ public class AssistidoEntity {
     @Column(name = "filiacao", length = 100)
     private String filiacao;
 
-    @Column(name = "rg", length = 11)
+    @Column(name = "rg")
     private String rg;
 }
