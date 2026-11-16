@@ -1,0 +1,145 @@
+
+<div class="pagina">
+  <div class="cadastro-card">
+
+    <header>
+      <h1>Cadastro de Assistidos</h1>
+      <p>Preencha as informações abaixo.</p>
+    </header>
+
+    <form (ngSubmit)="cadastrar()" #form="ngForm">
+
+      <h2>Dados pessoais</h2>
+
+      <div class="grid">
+
+        <div class="campo">
+          <label>Nome completo *</label>
+          <input name="nome" [(ngModel)]="assistido.nome"
+                 maxlength="150" required>
+        </div>
+
+        <div class="campo">
+          <label>Nome social</label>
+          <input name="nomeSocial"
+                 [(ngModel)]="assistido.nomeSocial"
+                 maxlength="150">
+        </div>
+
+        <div class="campo">
+          <label>CPF *</label>
+          <input name="cpf" [(ngModel)]="assistido.cpf"
+                 (input)="formatarCpf()"
+                 maxlength="14" placeholder="000.000.000-00"
+                 required>
+        </div>
+
+        <div class="campo">
+          <label>RG</label>
+          <input name="rg" [(ngModel)]="assistido.rg"
+                 maxlength="20">
+        </div>
+
+        <div class="campo">
+          <label>Sexo</label>
+          <select name="sexo" [(ngModel)]="assistido.sexo">
+            <option value="">Selecione</option>
+            <option value="FEMININO">Feminino</option>
+            <option value="MASCULINO">Masculino</option>
+            <option value="INTERSEXO">Intersexo</option>
+            <option value="NAO_INFORMADO">Não informado</option>
+          </select>
+        </div>
+
+        <div class="campo">
+          <label>Gênero</label>
+          <input name="genero" [(ngModel)]="assistido.genero"
+                 maxlength="60"
+                 placeholder="Como se identifica">
+        </div>
+
+        <div class="campo largura-total">
+          <label>Filiação</label>
+          <input name="filiacao"
+                 [(ngModel)]="assistido.filiacao"
+                 maxlength="200"
+                 placeholder="Nome da mãe, pai ou responsáveis">
+        </div>
+
+      </div>
+
+      <h2>Contato</h2>
+
+      <div class="grid">
+
+        <div class="campo">
+          <label>E-mail</label>
+          <input type="email" name="email"
+                 [(ngModel)]="assistido.email"
+                 maxlength="150">
+        </div>
+
+        <div class="campo">
+          <label>Telefone</label>
+          <input name="telefone"
+                 [(ngModel)]="assistido.telefone"
+                 (input)="formatarTelefone()"
+                 maxlength="15"
+                 placeholder="(62) 99999-9999">
+        </div>
+
+      </div>
+
+      <h2>Endereço</h2>
+
+      <div class="grid">
+
+        <div class="campo">
+          <label>CEP</label>
+          <input name="cep" [(ngModel)]="assistido.cep"
+                 (input)="formatarCep()"
+                 maxlength="9"
+                 placeholder="00000-000">
+        </div>
+
+        <div class="campo">
+          <label>UF</label>
+          <select name="uf" [(ngModel)]="assistido.uf">
+            <option value="">Selecione</option>
+            @for (uf of ufs; track uf) {
+              <option [value]="uf">{{ uf }}</option>
+            }
+          </select>
+        </div>
+
+        <div class="campo largura-total">
+          <label>Endereço completo</label>
+          <input name="endereco"
+                 [(ngModel)]="assistido.endereco"
+                 maxlength="255"
+                 placeholder="Rua, número, bairro e cidade">
+        </div>
+
+      </div>
+
+      <div class="acoes">
+        <button
+            type="submit"
+            [disabled]="form.invalid || salvando">
+            {{ salvando ? 'Cadastrando...' : 'Cadastrar assistido' }}
+        </button>
+        </div>
+            @if (mensagem) {
+            <p class="mensagem-sucesso">
+                {{ mensagem }}
+            </p>
+            }
+
+            @if (erro) {
+            <p class="mensagem-erro">
+                {{ erro }}
+            </p>
+            }
+            </form>
+        </div>
+</div>

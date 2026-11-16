@@ -1,0 +1,192 @@
+
+/* ==============================
+   ESTILOS GLOBAIS - ENIDOIS
+================================ */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  background: #f1f5f9;
+  color: #0f172a;
+}
+
+/* LAYOUT */
+
+.pagina {
+  min-height: 100vh;
+  padding: 48px 24px;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+.cadastro-card {
+  background: #ffffff;
+  padding: 40px;
+  border-radius: 16px;
+  max-width: 900px;
+  width: 100%;
+  box-shadow: 0 12px 36px rgba(15, 23, 42, 0.08);
+}
+
+/* TITULOS */
+
+header {
+  margin-bottom: 32px;
+}
+
+h1 {
+  font-size: 28px;
+  color: #0f172a;
+  margin-bottom: 8px;
+}
+
+h2 {
+  font-size: 18px;
+  color: #1e293b;
+  margin: 32px 0 20px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+p {
+  color: #64748b;
+}
+
+/* FORMULARIOS */
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 20px;
+}
+
+.campo {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.campo label {
+  font-size: 14px;
+  font-weight: 600;
+  color: #334155;
+}
+
+.campo input,
+.campo select,
+.campo textarea {
+  width: 100%;
+  padding: 13px;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  font-size: 15px;
+  background: white;
+  color: #0f172a;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.campo input:focus,
+.campo select:focus,
+.campo textarea:focus {
+  border-color: #2563eb;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+}
+
+.largura-total {
+  grid-column: 1 / -1;
+}
+
+/* BOTOES */
+
+.acoes {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 36px;
+}
+
+button {
+  padding: 14px 24px;
+  background: #2563eb;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+button:hover:not(:disabled) {
+  background: #1d4ed8;
+}
+
+button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* TABELAS - PARA TELA DE LISTAGEM */
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th, td {
+  padding: 14px;
+  text-align: left;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+th {
+  background: #f8fafc;
+  font-weight: 600;
+}
+
+tr:hover {
+  background: #f8fafc;
+}
+
+/* RESPONSIVIDADE */
+
+@media (max-width: 600px) {
+  .pagina {
+    padding: 20px 12px;
+  }
+
+  .cadastro-card {
+    padding: 24px;
+  }
+
+  .grid {
+    grid-template-columns: 1fr;
+  }
+
+  .acoes {
+    flex-direction: column;
+  }
+
+  .acoes button {
+    width: 100%;
+  }
+
+  .mensagem-sucesso {
+  margin-top: 16px;
+  color: #15803d;
+  font-weight: 600;
+}
+
+.mensagem-erro {
+  margin-top: 16px;
+  color: #dc2626;
+  font-weight: 600;
+}
+}

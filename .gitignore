@@ -1,0 +1,26 @@
+# Credenciais
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+
+# Angular
+**/node_modules/
+**/.angular/
+**/dist/
+**/coverage/
+
+# Spring Boot
+**/target/
+**/build/
+**/.gradle/
+
+# IntelliJ / VS Code
+.idea/
+*.iml
+.vscode/
+
+# Sistema
+.DS_Store
+Thumbs.db
