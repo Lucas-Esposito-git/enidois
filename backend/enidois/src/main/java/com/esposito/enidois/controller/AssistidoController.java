@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@RequestMapping("/assistidos")
 @AllArgsConstructor
 public class AssistidoController {
 
@@ -37,7 +38,7 @@ public class AssistidoController {
         return service.buscarPorId(id);
     }
 
-    @PutMapping
+    @PutMapping("/{id}")
     public AssistidoEntity atualizar(@PathVariable Long id ,@RequestBody AssistidoDTO dto) {
         return service.atualizar(id, dto);
     }

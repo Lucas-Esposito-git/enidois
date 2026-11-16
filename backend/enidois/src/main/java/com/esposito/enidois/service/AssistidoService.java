@@ -48,7 +48,7 @@ public class AssistidoService {
         assistido.setRg(dto.getRg());
         assistido.setUf(dto.getUf());
         assistido.setGenero(dto.getGenero());
-        assistido.setSexo(dto.getFiliacao());
+        assistido.setSexo(dto.getSexo());
         assistido.setCep(dto.getCep());
         assistido.setFiliacao(dto.getFiliacao());
         assistido.setEndereco(dto.getEndereco());
