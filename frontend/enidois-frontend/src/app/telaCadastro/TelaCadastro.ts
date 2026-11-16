@@ -4,6 +4,11 @@ import { FormsModule } from '@angular/forms';
 import { inject } from '@angular/core';
 import { AssistidoService } from '../services/assistido.service';
 import { Assistido } from '../models/assistido';
+import { finalize } from 'rxjs';
+import { ChangeDetectorRef} from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { OnInit } from '@angular/core';
+
 
 @Component({
   selector: 'app-tela-cadastro',
@@ -14,6 +19,34 @@ import { Assistido } from '../models/assistido';
 export class TelaCadastro {
 
     private assistidoService = inject(AssistidoService);
+    private readonly cdr = inject(ChangeDetectorRef);
+    private route = inject(ActivatedRoute);
+
+    modoEdicao = false;
+    idEdicao: number | null = null;
+
+    ngOnInit(): void {
+      const id = this.route.snapshot.paramMap.get('id');
+
+      if (id !== null) {
+        this.idEdicao = Number(id);
+        this.modoEdicao = true;
+
+        this.assistidoService.buscarPorId(this.idEdicao)
+          .subscribe({
+            next: (dados) => {
+              this.assistido = dados;
+              this.cdr.markForCheck();
+            },
+            error: (err) => {
+              console.error('Erro ao buscar assistido:', err);
+              this.erro = 'Não foi possível carregar o assistido.';
+              this.cdr.markForCheck();
+            }
+          });
+      }
+    }
+
 
         salvando = false;
         mensagem = '';
@@ -68,62 +101,49 @@ export class TelaCadastro {
   }
 
   
-    cadastrar(): void {
+  salvar(): void {
+    if (this.salvando) return;
 
-        if (this.salvando) return;
-
-        this.mensagem = '';
-        this.erro = '';
-
-        const dados: Assistido = {
-            ...this.assistido,
-
-            cpf: this.assistido.cpf.replace(/\D/g, ''),
-            telefone: this.assistido.telefone.replace(/\D/g, ''),
-            cep: this.assistido.cep.replace(/\D/g, '')
-        };
-
-        if (dados.cpf.length !== 11) {
-            this.erro = 'O CPF deve conter 11 dígitos.';
-            return;
-        }
-
-        this.salvando = true;
-
-        this.assistidoService.cadastrar(dados).subscribe({
-
-            next: (resposta) => {
-            console.log('Assistido cadastrado:', resposta);
-
-            this.mensagem = 'Assistido cadastrado com sucesso!';
-            this.salvando = false;
-
-            this.assistido = {
-                nome: '',
-                nomeSocial: '',
-                cpf: '',
-                email: '',
-                telefone: '',
-                endereco: '',
-                cep: '',
-                uf: '',
-                sexo: '',
-                genero: '',
-                rg: '',
-                filiacao: ''
-            };
-            },
-
-            error: (erro) => {
-            console.error('Erro ao cadastrar:', erro);
-
-            this.erro =
-                'Não foi possível cadastrar o assistido. Código HTTP: ' +
-                (erro.status || 'desconhecido');
-
-            this.salvando = false;
-            }
-        });
+    if (!this.assistido.nome || !this.assistido.cpf) {
+      this.erro = 'Preencha os campos obrigatórios.';
+      return;
     }
 
+    this.salvando = true;
+    this.mensagem = '';
+    this.erro = '';
+
+    const requisicao = this.modoEdicao && this.idEdicao !== null ? this.assistidoService.atualizar(this.idEdicao, this.assistido)
+    : this.assistidoService.cadastrar(this.assistido);
+
+    requisicao.pipe(finalize(() => {this.salvando = false; this.cdr.markForCheck();})).subscribe({
+        next: () => {
+          this.salvando = false;
+
+          if (this.modoEdicao) {
+            this.mensagem = 'Cadastro atualizado com sucesso!';
+          } else {
+            this.mensagem = 'Cadastro realizado com sucesso!';
+          }
+
+          this.cdr.markForCheck();
+
+          setTimeout(() => {
+            if (this.modoEdicao) {
+              window.location.assign('/assistidos');
+            } else {
+              window.location.reload();
+            }
+          }, 2000);
+        },
+
+        error: (err) => {
+          console.error('Erro ao salvar:', err);
+
+          this.erro = this.modoEdicao ? 'Erro ao atualizar assistido.' : 'Erro ao cadastrar assistido.';
+          this.salvando = false;
+          this.cdr.markForCheck();
+        }
+      });
+  }
 }
